@@ -47,7 +47,7 @@ public class Habitacion {
     
     
     
-    
+        
     //Metodos
     public BigDecimal calcularTarifaBase(){
         return tarifaBase;
@@ -55,12 +55,10 @@ public class Habitacion {
     
     @Override
     public String toString() {
-        return "Habitacion{" +
-                "numero=" + numero +
-                ", tipo='" + tipo + '\'' +
-                ", tarifaBase=" + tarifaBase +
-                ", estado=" + estado +
-                '}';
+        return "Habitación: " + numero +
+                "\nTipo: " + tipo +
+                "\nTarifa base: $" + tarifaBase +
+                "\nEstado: " + estado + "\n";
     }
   
     @Override
