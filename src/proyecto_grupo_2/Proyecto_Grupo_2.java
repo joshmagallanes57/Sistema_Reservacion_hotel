@@ -1,152 +1,116 @@
-
 package proyecto_grupo_2;
+
+
+
 import java.util.Scanner;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 public class Proyecto_Grupo_2 {
-
     public static void main(String[] args) {
-        
-        
-        
-    boolean clienteQuiereSalir = false;
+
+        /* Nos piden crear 5 habitaciones y 3 clientes --> Las habitaciones y clientes
+        * estan creados desde los archivos .txt como bases
+        * Desde el main gestionaremos los diferentes metodos que tendra nuestro sistema de hotel 
+       */
+
+        RegistroHotel hotel = new RegistroHotel();
+        boolean clienteQuiereSalir = false;
         Scanner sc = new Scanner(System.in);
+        hotel.cargarClientes();
+        hotel.cargarHabitaciones();
+        hotel.cargarReservas();
 
-        RegistroHotel hotel = new RegistroHotel("Hotel Salary");
 
-        while (!clienteQuiereSalir) {
+        while(!clienteQuiereSalir){
             System.out.println("======== MENÚ PRINCIPAL ========");
-            System.out.println("1. Registrar habitación");
-            System.out.println("2. Registrar cliente");
-            System.out.println("3. Listar habitaciones");
-            System.out.println("4. Listar clientes");
-            System.out.println("5. Buscar habitación por número");
-            System.out.println("6. Buscar habitaciones por tipo (Estandar/Suite)");
-            System.out.println("7. Crear reserva");
-            System.out.println("8. Salir");
+            System.out.println("1. Registrar habitaciones"); //--> metodo hecho
+            System.out.println("2. Registrar cliente");// --> metodo hecho 
+            System.out.println("3. Listar habitaciones"); // --> metodo hecho 
+            System.out.println("4. Listar clientes"); // --> metodo hecho 
+            System.out.println("5. Buscar habitación por número(Id.)"); // --> metodo hecho 
+            System.out.println("6. Buscar habitaciones por tipo (Estandar/Suite)"); //-->metodo hecho
+            System.out.println("7. Crear reserva"); //metodo hecho 
+            System.out.println("8. Listar reservas de un cliente (Ordenadas por fechas)"); // --> metodo hecho
+            System.out.println("9. Consultar habitaciones disponibles entre fechas"); //metodo hecho
+            System.out.println("10. Reporte reservas entre fechas"); //metodo hecho
+            System.out.println("11. Emitir factura de una reserva (por id)"); //metodo hecho 
+            System.out.println("12. Salir"); //--> hecho
             System.out.println("========================");
             System.out.print("Seleccione una opción: ");
 
             String opcion = sc.nextLine();
-
+            
             switch (opcion) {
                 case "1":
-                    System.out.println("Número de habitación:");
-                    int num = sc.nextInt();
-                    sc.nextLine();
-                    System.out.println("Tipo (Estandar/Suite):");
-                    String tipo = sc.nextLine();
-                    System.out.println("Tarifa base:");
-                    BigDecimal tarifa = new BigDecimal(sc.nextLine());
-                    if (tipo.equalsIgnoreCase("Suite")) {
-                        System.out.println("Recargo adicional:");
-                        BigDecimal recargo = new BigDecimal(sc.nextLine());
-                        hotel.registrarHabitacion(new HabitacionSuite(num, tarifa, recargo));
-                    } else {
-                        hotel.registrarHabitacion(new HabitacionEstandar(num, tarifa));
-                    }
-                    //mensaje de confirmacion de cliente creado
-                    System.out.println("Habitacion registrada con éxito.");
+                    System.out.println("-----------Sistema de registro de habitaciones-----------");
+                    hotel.registrarHabitaciones();
                     break;
-
                 case "2":
-                    System.out.println("Cédula del cliente:");
-                    String cedula = sc.nextLine();
-                    System.out.println("Nombre del cliente:");
-                    String nombre = sc.nextLine();
-                    hotel.registrarCliente(new Cliente(cedula, nombre));
-                    //mensaje de confirmacion de cliente creado
-                    System.out.println("Cliente creado con éxito.");
+                    System.out.println("-----------Sistema de registro de clientes-----------");
+                    hotel.registrarCliente();
                     break;
-
                 case "3":
-                    hotel.mostrarHabitaciones();
+                    System.out.println("------- Listar habitaciones registradas en el sistema -----------");
+                    hotel.listarHabitaciones();
                     break;
-
                 case "4":
-                    hotel.mostrarCliente();
+                    System.out.println("------- Listar Clientes registrados en el sistema -----------");
+                    hotel.listarClientes();
                     break;
-
                 case "5":
-                    System.out.println("Ingrese número de habitación:");
-                    int numero = sc.nextInt();
-                    sc.nextLine();
-                    Habitacion h = hotel.buscarHabitacionPorNumero(numero);
-                    if (h != null) System.out.println(h);
-                    else System.out.println("No se encontró la habitación.");
-                    break;
-
-                case "6":
-                    System.out.println("Ingrese tipo (Estandar/Suite):");
-                    String t = sc.nextLine();
-                    var lista = hotel.buscarHabitacionesPorTipo(t);
-                    if (lista.isEmpty()) System.out.println("No hay habitaciones de ese tipo.");
-                    else lista.forEach(System.out::println);
-                    break;
-
-                case "7":
-                    try {
-                        System.out.println("--- CREAR RESERVA ---");
-                    
-                        System.out.println("Ingrese id de reserva:");
-                        int id = sc.nextInt();
-                        sc.nextLine(); 
+                    System.out.print("Digite el id('Numero') habitacion a consultar: ");
+                    try{
+                        int idhabitacion = sc.nextInt();
+                        sc.nextLine();
+                        hotel.buscarHabitacionPorId(idhabitacion);
                         
-                        //metodo nuevo en RegistroHotel
-                        System.out.println("Cédula del cliente:");
-                        String c = sc.nextLine();
-                        Cliente cliente = hotel.buscarClientePorCedula(c);
-                    
-                        if (cliente == null) {
-                            System.out.println("❌ Error: Cliente con cédula " + c + " no encontrado.");
-                            break;
-                        }
-
-                        System.out.println("Número de habitación:");
-                        int nh = sc.nextInt();
-                        sc.nextLine(); 
-                        
-                        //numero habitacion
-                        Habitacion hab = hotel.buscarHabitacionPorNumero(nh);
-                    
-                        if (hab == null) {
-                            System.out.println("❌ Error: Habitación con número " + nh + " no encontrada.");
-                            break;
-                        }
-                        
-                        System.out.println("Fecha entrada (YYYY-MM-DD):");
-                        LocalDate e = LocalDate.parse(sc.nextLine());
-                        System.out.println("Fecha salida (YYYY-MM-DD):");
-                        LocalDate s = LocalDate.parse(sc.nextLine());
-                    
-                        //crear la Reserva (si cliente y habitación no son nulos)
-                        hotel.crearReserva(id, cliente, hab, e, s);
-                    
-                    } catch (HabitacionNoDisponible ex) {
-                        System.out.println("❌ Error de Disponibilidad: " + ex.getMessage());
-                    } catch (FechaInvalidaException ex) { 
-                        System.out.println("❌ Error de Fechas: " + ex.getMessage());
-                    } catch (java.time.format.DateTimeParseException ex) {
-                        System.out.println("❌ Error de Formato: La fecha debe estar en formato YYYY-MM-DD.");
-                    } catch (Exception ex) {
-                    // Captura errores inesperados o de Scanner (como ingresar texto en un int)
-                        System.out.println("❌ Error General Inesperado. Intente de nuevo.");
+                    }catch(Exception err){
+                        sc.nextLine();
+                        System.out.println("Datos ingresados equivocados.");
                     }
                     break;
-
+                case "6":
+                    try{
+                        System.out.print("Buscar habitaciones por tipo (Estandar/Suite): ");
+                        TipoHabitacion tipoHabitacion = TipoHabitacion.valueOf(sc.nextLine().toUpperCase());
+                        System.out.println("--------------Lista de habitaciones de tipo "+tipoHabitacion+"--------------");
+                        hotel.buscarHabitacionPorTipo(tipoHabitacion);
+                    }catch(Exception err){
+                        System.out.println("Datos ingresados equivocados.");
+                    }
+                    break;
+                case "7":
+                    System.out.println("-----------Sistema de registro de reservas-----------");
+                    hotel.registrarReserva();
+                    break;
                 case "8":
+                    try{
+                        System.out.print("Ingrese id decliente a consultar datos: ");
+                        hotel.listarReservasPorCliente();
+                    }catch(Exception err){
+                        sc.nextLine();
+                        System.out.println("Datos ingresados invalidos.");
+                    }
+                    break;
+                case "9":
+                    hotel.HabitacionesDisponiblesEntreFechas();
+                    break;
+                case "10":
+                    hotel.reporteReservasEntreFechas();
+                    break;
+                case "11":
+                    hotel.emitirFacturaIDCReserva();
+                    break;
+                case "12":
                     clienteQuiereSalir = true;
-                    System.out.println("Gracias por su visita");
+                    System.out.println("Graciaspor su visita");
                     break;
-
-                default:
-                    System.out.println("Opción inválida, intente de nuevo...");
-                    break;
-                
+                default: System.out.println("Opcion inválida intente de nuevo..."); 
             }
         }
         sc.close();
     }
+
     
 }

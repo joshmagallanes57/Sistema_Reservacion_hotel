@@ -1,0 +1,5 @@
+1;Juan Pérez;juan.perez@gmail.com;0991234567
+2;María López;maria.lopez@hotmail.com;0987654321
+3;Carlos Ramírez;carlos.ramirez@yahoo.com;0975558888
+4;Ana Torres;ana.torres@gmail.com;0961112233
+5;Luis Mendoza;luis.mendoza@outlook.com;0959998888

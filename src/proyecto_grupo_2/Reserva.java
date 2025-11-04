@@ -1,76 +1,77 @@
 
 package proyecto_grupo_2;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
+import java.math.BigDecimal;
 import java.util.Objects;
 
+/*Creacion de la clase, constructor getters y setters */
+
 public class Reserva {
-    private int id;
-    private Cliente cliente;
-    private Habitacion habitacion;
-    private LocalDate fechaEntrada;
-    private LocalDate fechaSalida;
-    private EstadoReserva estado;
-    
-    //Constructor de la clase
-    public Reserva(int id, Cliente cliente, Habitacion habitacion,
-                   LocalDate fechaEntrada, LocalDate fechaSalida) {
-        this.id = id;
-        this.cliente = cliente;
-        this.habitacion = habitacion;
-        this.fechaEntrada = fechaEntrada;
-        this.fechaSalida = fechaSalida;
-        this.estado = EstadoReserva.PENDIENTE;
-    }
-    //Getters
-    public int getId() { 
-        return id; 
-    }
-    public Cliente getCliente() {
-        return cliente; }
-    public Habitacion getHabitacion() {
-        return habitacion; 
-    }
-    public LocalDate getFechaEntrada() {
-        return fechaEntrada; 
-    }
-    public LocalDate getFechaSalida() {
-        return fechaSalida; 
-    }
-    public EstadoReserva getEstado() {
-        return estado; 
-    }
-    
-    //Setters
-    public void setEstado(EstadoReserva estado) {
-        this.estado = estado; 
-    }
-    
-    //Metodos
-    @Override
-    public String toString() {
-        return "Reserva{" +
-                "id=" + id +
-                ", cliente=" + cliente.getNombre() +
-                ", habitacion=" + habitacion.getNumero() +
-                ", entrada=" + fechaEntrada +
-                ", salida=" + fechaSalida +
-                ", estado=" + estado +
-                '}';
-    }
+   private int idReserva; 
+   private LocalDate fechaInicio; 
+   private LocalDate fechaFin; 
+   private int cantidadDePersonasReserva; // Verificar que las habitaciones no sean excedidad
+   private EstadoReserva estadoReserva;
+   private int idCliente; 
+   private int idHabitacion;
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Reserva)) return false;
-        Reserva reserva = (Reserva) o;
-        return id == reserva.id;
-    }
+   public Reserva(int idReserva, LocalDate fechaInicio, LocalDate fechaFin, int cantidadDePersonasReserva,EstadoReserva estadoReserva, int idCliente, int idHabitacion) {
+      this.idReserva = idReserva;
+      this.fechaInicio = fechaInicio;
+      this.fechaFin = fechaFin;
+      this.cantidadDePersonasReserva = cantidadDePersonasReserva;
+      this.estadoReserva = estadoReserva;
+      this.idCliente = idCliente;
+      this.idHabitacion = idHabitacion;
+   }
+   
+   public int getIdReserva() {
+      return idReserva;
+   }
+   public void setIdReserva(int idReserva) {
+      this.idReserva = idReserva;
+   }
+   public LocalDate getFechaInicio() {
+      return fechaInicio;
+   }
+   public void setFechaInicio(LocalDate fechaInicio) {
+      this.fechaInicio = fechaInicio;
+   }
+   public LocalDate getFechaFin() {
+      return fechaFin;
+   }
+   public void setFechaFin(LocalDate fechaFin) {
+      this.fechaFin = fechaFin;
+   }
+   public int getCantidadDePersonasReserva() {
+      return cantidadDePersonasReserva;
+   }
+   public void setCantidadDePersonasReserva(int cantidadDePersonasReserva) {
+      this.cantidadDePersonasReserva = cantidadDePersonasReserva;
+   }
+   public EstadoReserva getEstadoReserva() {
+      return estadoReserva;
+   }
+   public void setEstadoReserva(EstadoReserva estadoReserva) {
+      this.estadoReserva = estadoReserva;
+   }
+   public int getIdCliente() {
+      return idCliente;
+   }
+   public void setIdCliente(int idCliente) {
+      this.idCliente = idCliente;
+   }
+   public int getIdHabitacion() {
+      return idHabitacion;
+   }
+   public void setIdHabitacion(int idHabitacion) {
+      this.idHabitacion = idHabitacion;
+   }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+   
+   @Override
+   public String toString(){
+      return idReserva + ";" + fechaInicio + ";" + fechaFin + ";" + cantidadDePersonasReserva + ";" + estadoReserva + ";" + idCliente + ";" + idHabitacion;
+   }
 }
-
-
-

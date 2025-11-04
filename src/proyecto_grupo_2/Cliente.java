@@ -4,52 +4,47 @@ package proyecto_grupo_2;
 import java.util.Objects;
 
 public class Cliente {
-    //Atributos
-    private String cedula;
+    /*
+     * Creacion de la clase cliente constructor, getters y setters
+     */
+    private int idCliente;
     private String nombre;
-    
-    //Constructor
-    public Cliente(String cedula, String nombre){
-        this.cedula=cedula;
-        this.nombre=nombre;
+    private String correo;
+    private int telefono;
+    public Cliente(int idCliente, String nombre, String correo, int telefono) {
+        this.idCliente = idCliente;
+        this.nombre = nombre;
+        this.correo = correo;
+        this.telefono = telefono;
     }
-    
-    //Getters
-    
-    public String getCedula(){
-        return cedula;
-        
+    public int getIdCliente() {
+        return idCliente;
     }
-    
-    public String getNombre(){
+    public void setIdCliente(int idCliente) {
+        this.idCliente = idCliente;
+    }
+    public String getNombre() {
         return nombre;
     }
-    
-    //Metodos 
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+    public String getCorreo() {
+        return correo;
+    }
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+    public int getTelefono() {
+        return telefono;
+    }
+    public void setTelefono(int telefono) {
+        this.telefono = telefono;
+    }
+
     @Override
     public String toString(){
-        return "Cliente{" + "cedula= '" + cedula+ '\''
-                + ", nombre='" + nombre+ '\''+ '}';
+        return idCliente + ";" + nombre + ";" + correo + ";" + telefono;
     }
-    
-    
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Cliente)) return false;
-        Cliente cliente = (Cliente) o;
-        return cedula.equals(cliente.cedula);
-    }
-    
-    
-    @Override
-    public int hashCode() {
-        return Objects.hash(cedula);
-    }
-    
-    
-    
-    
-    
     
 }
