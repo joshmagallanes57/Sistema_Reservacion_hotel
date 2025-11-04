@@ -46,6 +46,8 @@ public class Proyecto_Grupo_2 {
                     } else {
                         hotel.registrarHabitacion(new HabitacionEstandar(num, tarifa));
                     }
+                    //mensaje de confirmacion de cliente creado
+                    System.out.println("Habitacion registrada con éxito.");
                     break;
 
                 case "2":
@@ -54,6 +56,8 @@ public class Proyecto_Grupo_2 {
                     System.out.println("Nombre del cliente:");
                     String nombre = sc.nextLine();
                     hotel.registrarCliente(new Cliente(cedula, nombre));
+                    //mensaje de confirmacion de cliente creado
+                    System.out.println("Cliente creado con éxito.");
                     break;
 
                 case "3":
@@ -83,26 +87,51 @@ public class Proyecto_Grupo_2 {
 
                 case "7":
                     try {
+                        System.out.println("--- CREAR RESERVA ---");
+                    
                         System.out.println("Ingrese id de reserva:");
                         int id = sc.nextInt();
-                        sc.nextLine();
+                        sc.nextLine(); 
+                        
+                        //metodo nuevo en RegistroHotel
                         System.out.println("Cédula del cliente:");
                         String c = sc.nextLine();
-                        Cliente cliente = null;
-                        for (Cliente cli : hotel.getClientes()) {
-                            if (cli.getCedula().equals(c)) cliente = cli;
+                        Cliente cliente = hotel.buscarClientePorCedula(c);
+                    
+                        if (cliente == null) {
+                            System.out.println("❌ Error: Cliente con cédula " + c + " no encontrado.");
+                            break;
                         }
+
                         System.out.println("Número de habitación:");
                         int nh = sc.nextInt();
-                        sc.nextLine();
+                        sc.nextLine(); 
+                        
+                        //numero habitacion
                         Habitacion hab = hotel.buscarHabitacionPorNumero(nh);
+                    
+                        if (hab == null) {
+                            System.out.println("❌ Error: Habitación con número " + nh + " no encontrada.");
+                            break;
+                        }
+                        
                         System.out.println("Fecha entrada (YYYY-MM-DD):");
                         LocalDate e = LocalDate.parse(sc.nextLine());
                         System.out.println("Fecha salida (YYYY-MM-DD):");
                         LocalDate s = LocalDate.parse(sc.nextLine());
+                    
+                        //crear la Reserva (si cliente y habitación no son nulos)
                         hotel.crearReserva(id, cliente, hab, e, s);
+                    
                     } catch (HabitacionNoDisponible ex) {
-                        System.out.println("Error: " + ex.getMessage());
+                        System.out.println("❌ Error de Disponibilidad: " + ex.getMessage());
+                    } catch (FechaInvalidaException ex) { 
+                        System.out.println("❌ Error de Fechas: " + ex.getMessage());
+                    } catch (java.time.format.DateTimeParseException ex) {
+                        System.out.println("❌ Error de Formato: La fecha debe estar en formato YYYY-MM-DD.");
+                    } catch (Exception ex) {
+                    // Captura errores inesperados o de Scanner (como ingresar texto en un int)
+                        System.out.println("❌ Error General Inesperado. Intente de nuevo.");
                     }
                     break;
 
@@ -114,6 +143,7 @@ public class Proyecto_Grupo_2 {
                 default:
                     System.out.println("Opción inválida, intente de nuevo...");
                     break;
+                
             }
         }
         sc.close();

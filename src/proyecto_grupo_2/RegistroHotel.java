@@ -71,16 +71,58 @@ public class RegistroHotel {
     // Crear reserva (simplificada)
     public void crearReserva(int id, Cliente cliente, Habitacion habitacion,
                              LocalDate entrada, LocalDate salida)
-            throws HabitacionNoDisponible {
+            throws HabitacionNoDisponible, FechaInvalidaException {
 
+        if (!salida.isAfter(entrada)) {
+            throw new FechaInvalidaException("No se permiten reservas con cero noches.");
+        }
         if (habitacion.getEstado() == EstadoHabitacion.MANTENIMIENTO) {
             throw new HabitacionNoDisponible("La habitación está en mantenimiento.");
         }
+        
+        if (haySolapamiento(habitacion, entrada, salida)) {
+            throw new HabitacionNoDisponible("La habitación ya tiene una reserva activa que se solapa.");
+        }
 
         Reserva r = new Reserva(id, cliente, habitacion, entrada, salida);
-        habitacion.setEstado(EstadoHabitacion.OCUPADA);
+        r.setEstado(EstadoReserva.CONFIRMADA); 
         reservas.add(r);
-        System.out.println("Reserva creada: " + r);
+        System.out.println("Reserva CONFIRMADA con exito: " + r);
+        }
+    
+    
+    //para mi nueva exception de las fechas
+    private boolean haySolapamiento(Habitacion habitacion, LocalDate entrada, LocalDate salida) {
+    //recorrer todas las reservas registradas en el hotel
+    for (Reserva r : reservas) {
+        
+        //verificar la misma habitación
+        if (r.getHabitacion().equals(habitacion)) {
+            
+            //verificar reserva (CONFIRMADA o PENDIENTE)
+            if (r.getEstado() == EstadoReserva.CONFIRMADA || r.getEstado() == EstadoReserva.PENDIENTE) {
+                //condicion 1 o condicion 2
+                
+                LocalDate rEntrada = r.getFechaEntrada();
+                LocalDate rSalida = r.getFechaSalida();
+                
+                boolean solapa = entrada.isBefore(rSalida) && rEntrada.isBefore(salida);
+                
+                if (solapa) {
+                    return true;
+                }
+            }
+        }
+    } return false;
+    }
+    public Cliente buscarClientePorCedula(String cedula) {
+        for (Cliente c : clientes) {
+        // el metodo que comapara 
+            if (c.getCedula().equals(cedula)) {
+                return c;
+            }
+        }
+        return null;
     }
     
 }
