@@ -112,5 +112,4 @@ public class Proyecto_Grupo_2 {
         sc.close();
     }
 
-    
 }

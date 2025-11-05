@@ -31,3 +31,4 @@ public class HabitacionSuite extends Habitacion {
          return idHabitacion + ";" + capacidadPersonas + ";" + precioNoche + ";" + estadoHabitacion + ";" + tipo+";"+recargo;
     }
 }
+

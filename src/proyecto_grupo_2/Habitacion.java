@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 
 
 
-
 public abstract class Habitacion {
   /*
    * Clase abstracta molde para la creacion de los diversos tipos de habitaciones

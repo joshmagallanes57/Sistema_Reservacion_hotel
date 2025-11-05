@@ -4,9 +4,7 @@ package proyecto_grupo_2;
 import java.util.Objects;
 
 public class Cliente {
-    /*
-     * Creacion de la clase cliente constructor, getters y setters
-     */
+
     private int idCliente;
     private String nombre;
     private String correo;
@@ -46,5 +44,5 @@ public class Cliente {
     public String toString(){
         return idCliente + ";" + nombre + ";" + correo + ";" + telefono;
     }
-    
+
 }

@@ -9,6 +9,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Scanner;
 
+
 public class RegistroHotel {
     //Atributos para guardar en Array objetos de los tipos de objetos (Cliente,Habitacion,Reserva)
     private ArrayList<Cliente> listaDeClientes;
